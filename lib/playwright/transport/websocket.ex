@@ -32,7 +32,12 @@ defmodule Playwright.Transport.WebSocket do
   end
 
   def post(message, %{process: process, stream_ref: stream_ref}) do
-    :gun.ws_send(process, stream_ref, {:text, message})
+
+    if String.contains?(message, "initialize") do
+      IO.puts("websocket post do nothing as its initialize message")
+    else
+      :gun.ws_send(process, stream_ref, {:text, message})
+    end
   end
 
   def parse({:gun_ws, _process, _stream_ref, {:text, message}}, state) do

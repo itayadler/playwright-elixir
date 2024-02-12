@@ -33,12 +33,12 @@ defmodule Playwright.Channel.Connection do
   @impl GenServer
   def handle_continue(:initialize, %{transport: transport} = state) do
     message = %{
-      guid: "",
+      id: -1,
+      sessionId: "",
       method: "initialize",
-      params: %{sdkLanguage: "elixir"},
+      params: %{sdkLanguage: "javascript"},
     }
 
-    # message = Channel.Message.new("", :initialize, %{sdkLanguage: "elixir"})
     Transport.post(transport, message)
     {:noreply, state}
   end
@@ -93,10 +93,18 @@ defmodule Playwright.Channel.Connection do
     update =
       case response do
         %{id: message_id} ->
-          key = {:message, message_id}
-          {from, callbacks} = Map.pop!(callbacks, key)
-          Channel.recv(session, {from, response})
-          %{state | callbacks: callbacks}
+          if message_id == -1 do
+            key = {:initialize, ""}
+            {from, callbacks} = Map.pop(callbacks, key)
+            Channel.recv(session, {from, response})
+            %{state | callbacks: callbacks}
+          else
+            key = {:message, message_id}
+
+            {from, callbacks} = Map.pop!(callbacks, key)
+            Channel.recv(session, {from, response})
+            %{state | callbacks: callbacks}
+          end
 
         %{guid: guid, method: method} ->
           key = {as_atom(method), guid}
