@@ -36,7 +36,6 @@ defmodule Playwright.Channel.Connection do
       guid: "",
       method: "initialize",
       params: %{sdkLanguage: "elixir"},
-      metadata: %{}
     }
 
     # message = Channel.Message.new("", :initialize, %{sdkLanguage: "elixir"})
