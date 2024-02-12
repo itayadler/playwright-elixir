@@ -31,8 +31,8 @@ defmodule Playwright.Transport.WebSocket do
     end
   end
 
-  def post(message, %{process: process}) do
-    :gun.ws_send(process, {:text, message})
+  def post(message, %{process: process, stream_ref: stream_ref}) do
+    :gun.ws_send(process, stream_ref, {:text, message})
   end
 
   def parse({:gun_ws, _process, _stream_ref, {:text, message}}, state) do

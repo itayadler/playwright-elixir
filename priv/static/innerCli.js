@@ -8743,9 +8743,9 @@ var require_dispatcher = __commonJS({
           const sdkObject = dispatcher._object instanceof _instrumentation.SdkObject ? dispatcher._object : void 0;
           const callMetadata = {
             id: `call@${id}`,
-            stack: validMetadata.stack,
-            apiName: validMetadata.apiName,
-            internal: validMetadata.internal,
+            stack: validMetadata?.stack,
+            apiName: validMetadata?.apiName,
+            internal: validMetadata?.internal,
             objectId: sdkObject === null || sdkObject === void 0 ? void 0 : sdkObject.guid,
             pageId: sdkObject === null || sdkObject === void 0 ? void 0 : (_sdkObject$attributio5 = sdkObject.attribution) === null || _sdkObject$attributio5 === void 0 ? void 0 : (_sdkObject$attributio6 = _sdkObject$attributio5.page) === null || _sdkObject$attributio6 === void 0 ? void 0 : _sdkObject$attributio6.guid,
             frameId: sdkObject === null || sdkObject === void 0 ? void 0 : (_sdkObject$attributio7 = sdkObject.attribution) === null || _sdkObject$attributio7 === void 0 ? void 0 : (_sdkObject$attributio8 = _sdkObject$attributio7.frame) === null || _sdkObject$attributio8 === void 0 ? void 0 : _sdkObject$attributio8.guid,
